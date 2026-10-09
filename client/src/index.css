@@ -62,6 +62,29 @@ h1 em { color: #ffd486; font-weight: 400; }
 .opening-statement h2, .proposals h2 { max-width: 17ch; margin: .7rem 0 1.1rem; color: var(--plum); font-size: clamp(2rem, 4vw, 3.05rem); font-weight: 600; line-height: 1.08; letter-spacing: -.045em; }
 .opening-statement p:not(.statement-label) { max-width: 69ch; margin: .65rem 0; font-size: 1.06rem; }
 
+.archive { margin: 0 0 4.65rem; padding: clamp(1.35rem, 4vw, 2.25rem); border-top: 7px solid var(--yellow); background: #f2e6f0; }
+.archive-header { display: grid; grid-template-columns: minmax(0, 1fr) 210px; gap: 1.5rem; align-items: center; padding-bottom: 1.7rem; border-bottom: 1px solid rgba(56,33,67,.19); }
+.archive-header h2 { max-width: 17ch; margin: .55rem 0 .7rem; color: var(--plum); font-size: clamp(2rem, 4vw, 3.05rem); font-weight: 600; line-height: 1.04; letter-spacing: -.05em; }
+.archive-header > div > p:not(.statement-label) { max-width: 60ch; margin: 0; color: #4d3c52; font-size: .96rem; line-height: 1.55; }
+.archive-logo { width: 100%; max-height: 144px; object-fit: contain; object-position: center; filter: drop-shadow(0 8px 13px rgba(42,20,50,.12)); }
+.archive-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem; margin-top: 1.5rem; }
+.archive-card { position: relative; display: flex; min-height: 280px; overflow: hidden; isolation: isolate; background: white; box-shadow: 0 10px 24px rgba(56,33,67,.1); }
+.archive-card::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: var(--pink); }
+.archive-card:nth-child(2)::before { background: var(--yellow); }
+.archive-card:nth-child(3)::before { background: #1c925c; }
+.archive-card-content { position: relative; z-index: 1; display: flex; flex-direction: column; width: 100%; padding: 1.25rem 1.15rem 1.15rem 1.35rem; }
+.archive-card-topline { display: flex; align-items: center; justify-content: space-between; gap: .65rem; }
+.archive-number { color: var(--plum); font-family: "Fraunces", Georgia, serif; font-size: 2.45rem; font-weight: 600; line-height: 1; letter-spacing: -.06em; }
+.archive-place { color: #725c70; font-family: "DM Mono", monospace; font-size: .67rem; letter-spacing: .045em; text-align: right; }
+.archive-card h3 { max-width: 14ch; margin: 1.1rem 0 .55rem; color: var(--plum); font-size: 1.24rem; font-weight: 600; line-height: 1.14; letter-spacing: -.025em; }
+.archive-card p { margin: 0; color: #514653; font-size: .86rem; line-height: 1.55; }
+.archive-action { display: inline-flex; align-items: center; gap: .35rem; width: max-content; margin-top: auto; padding-top: 1.25rem; color: var(--purple); font-size: .83rem; font-weight: 800; text-decoration: none; transition: color 180ms, transform 180ms; }
+.archive-action:hover { color: var(--pink); transform: translateX(3px); }
+.has-artwork::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(255,255,255,.97) 0%, rgba(255,255,255,.91) 56%, rgba(255,255,255,.22) 100%); z-index: -1; }
+.archive-card-artwork { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 58% 50%; opacity: .75; }
+.archive-source { display: flex; align-items: flex-start; gap: .45rem; margin: 1rem 0 0; color: #685668; font-family: "DM Mono", monospace; font-size: .68rem; line-height: 1.45; }
+.archive-source svg { flex: 0 0 auto; margin-top: .05rem; }
+
 .doc-section { margin: 0 0 4.65rem; scroll-margin-top: 2rem; }
 .section-heading { display: flex; align-items: center; gap: .85rem; margin-bottom: 2rem; padding-bottom: .95rem; border-bottom: 1px solid var(--line); }
 .section-icon { display: grid; width: 40px; height: 40px; place-items: center; border-radius: 50%; background: var(--plum); color: #ffdb93; }
@@ -109,6 +132,12 @@ footer p:first-child { color: #f1c46e; }
   .document-meta { align-items: flex-start; flex-direction: column; }
   .download-button { width: 100%; }
   .opening-statement { margin-bottom: 3.5rem; border-radius: 3px 3px 28px 3px; }
+  .archive { margin-bottom: 3.5rem; }
+  .archive-header { grid-template-columns: minmax(0, 1fr) 115px; gap: .8rem; }
+  .archive-logo { max-height: 100px; }
+  .archive-cards { grid-template-columns: 1fr; gap: .75rem; }
+  .archive-card { min-height: 215px; }
+  .archive-card h3 { max-width: none; margin-top: .85rem; }
   .blocks { gap: 2rem; }
   .block { padding-left: 0; }
   .proposal-grid { grid-template-columns: 1fr; }

@@ -1,4 +1,4 @@
-import { Download, FileText, HeartHandshake, Landmark, Scale, UsersRound } from "lucide-react";
+import { ArrowUpRight, BookOpen, CalendarDays, Download, FileText, HeartHandshake, Landmark, Scale, UsersRound } from "lucide-react";
 
 const sourceText = `Conclusiones Finales
 38 ENCUENTRO PLURINACIONAL
@@ -176,6 +176,37 @@ const sections: Section[] = [
   },
 ];
 
+const archiveCards = [
+  {
+    number: "37°",
+    place: "Jujuy · 2024",
+    title: "Conclusiones de los talleres",
+    description: "Documento colectivo con las conclusiones publicadas por la Comisión Organizadora de Jujuy.",
+    href: "/manus-storage/conclusiones_37_encuentro_jujuy_2024_895a490f.pdf",
+    action: "Abrir conclusiones",
+    external: true,
+  },
+  {
+    number: "38°",
+    place: "Corrientes · 2025",
+    title: "Taller 8 · Activismo TTTNB",
+    description: "Conclusiones finales del Taller 8: emergencia integral, organización, cupo laboral y disputa sindical.",
+    href: "#documento",
+    action: "Leer conclusiones",
+    external: false,
+  },
+  {
+    number: "39°",
+    place: "Córdoba · 2026",
+    title: "Camino al próximo Encuentro",
+    description: "Información, comunicación y materiales de la convocatoria del 39° Encuentro Plurinacional.",
+    href: "https://www.39encuentropluri.com/",
+    action: "Ir al sitio oficial",
+    external: true,
+    artwork: "/manus-storage/1000915858_a216e7e6.png",
+  },
+];
+
 function downloadSource() {
   const file = new Blob([sourceText], { type: "text/plain;charset=utf-8" });
   const url = URL.createObjectURL(file);
@@ -249,6 +280,36 @@ export default function Home() {
           <h2 id="planteo-general">Una emergencia integral exige unidad estratégica</h2>
           <p>La comunidad, el colectivo trans-travesti, denuncia que enfrenta una emergencia integral. La respuesta debe ser la unidad estratégica, la organización territorial y federal, la disputa de todas las herramientas del Estado y la construcción de un poder comunitario autónomo y reparador.</p>
           <p>Honrando la memoria de nuestras madres travas y trabajando de manera interseccional y transversal, defenderemos lo conquistado y avanzaremos, con desobediencia y firmeza, hacia una vida verdaderamente…</p>
+        </section>
+
+        <section className="archive" id="archivo" aria-labelledby="archivo-encuentros">
+          <div className="archive-header">
+            <div>
+              <p className="statement-label">Memoria en movimiento</p>
+              <h2 id="archivo-encuentros">Archivo de Encuentros</h2>
+              <p>Las conclusiones son memoria organizada. Este acceso reúne los materiales verificables del Encuentro anterior, el documento actual y el camino hacia el próximo.</p>
+            </div>
+            <img className="archive-logo" src="/manus-storage/Logo_af5fe2cf.png" alt="Identidad gráfica del 39° Encuentro Plurinacional de Córdoba 2026" />
+          </div>
+          <div className="archive-cards">
+            {archiveCards.map((card) => (
+              <article className={`archive-card ${card.artwork ? "has-artwork" : ""}`} key={card.number}>
+                {card.artwork && <img className="archive-card-artwork" src={card.artwork} alt="" aria-hidden="true" />}
+                <div className="archive-card-content">
+                  <div className="archive-card-topline">
+                    <span className="archive-number">{card.number}</span>
+                    <span className="archive-place">{card.place}</span>
+                  </div>
+                  <h3>{card.title}</h3>
+                  <p>{card.description}</p>
+                  <a className="archive-action" href={card.href} target={card.external ? "_blank" : undefined} rel={card.external ? "noreferrer" : undefined}>
+                    {card.action} {card.external ? <ArrowUpRight size={17} aria-hidden="true" /> : <BookOpen size={17} aria-hidden="true" />}
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+          <p className="archive-source"><CalendarDays size={16} aria-hidden="true" /> El archivo se amplía con enlaces a publicaciones de las comisiones organizadoras y documentos colectivos disponibles.</p>
         </section>
 
         {sections.map((section) => <SectionContent key={section.heading} section={section} />)}
