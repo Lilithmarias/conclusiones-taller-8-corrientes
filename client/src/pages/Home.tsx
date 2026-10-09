@@ -511,6 +511,25 @@ export default function Home() {
       </header>
 
       <main id="documento" className="main-content">
+        <section className="march-callout" aria-labelledby="marcha-title">
+          <img className="march-poster" src="/manus-storage/1000916566_d6f86b72.jpg" alt="Afiche de la Marcha contra los Travesticidios, Transfemicidios y Transhomicidios del 39° Encuentro Plurinacional" />
+          <div className="march-content">
+            <p className="statement-label">39° Encuentro Plurinacional · Convocatoria</p>
+            <h2 id="marcha-title">🏳️‍⚧️💜 Marcha contra los travesticidios, transfemicidios y transhomicidios</h2>
+            <p className="march-lead">Nos encontramos para marchar juntxs y decir, una vez más: <strong>¡Basta de violencia travesti-trans!</strong></p>
+            <p>Porque nuestras vidas importan. Porque queremos vivir libres, con derechos, dignidad y sin violencias. Frente al odio y la discriminación, respondemos organizadxs y en las calles.</p>
+            <div className="march-details">
+              <p><CalendarDays size={18} aria-hidden="true" /><span><strong>Sábado 10 de octubre</strong><br />18:00 hs</span></p>
+              <p><MapPin size={18} aria-hidden="true" /><span><strong>Concentración</strong><br />Av. Gral. Paz y La Tablada</span></p>
+            </div>
+            <p className="march-route"><strong>Recorrido:</strong> desde allí marchamos hasta Arturo M. Bas y Caseros, donde se encuentra la Plaza Político-Cultural.</p>
+            <p className="march-community">🏳️‍🌈 Nos encontramos mujeres, lesbianas, travestis, trans, bisexuales, intersexuales y personas no binarias para hacer escuchar nuestras voces.</p>
+            <p className="march-slogan">¡Fuera la violencia travesti-trans!<br /><strong>🔥 ¡Nos queremos vivxs, libres y organizadxs! 🔥</strong></p>
+            <p className="march-terf">Fuera terfas de nuestros encuentros.</p>
+            <p className="march-tags">#MarchaContraLosTravesticidios #BastaDeViolencia #TravestiTrans #Transfemicidios #Transhomicidios #OrgulloYResistencia #Diversidad #Derechos #NiUnaMenos #39EncuentroPlurinacional</p>
+          </div>
+        </section>
+
         <div className="document-meta">
           <div><span>Documento colectivo</span><strong>Taller 8 · Corrientes 2025</strong></div>
           <div className="document-actions">
