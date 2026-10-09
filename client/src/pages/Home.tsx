@@ -1,4 +1,5 @@
-import { ArrowUpRight, BookOpen, CalendarDays, Download, FileText, HeartHandshake, Landmark, Scale, UsersRound } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowUpRight, BookOpen, CalendarDays, Download, Eye, FileText, HeartHandshake, Landmark, Scale, UsersRound, X } from "lucide-react";
 
 const sourceText = `Conclusiones Finales
 38 ENCUENTRO PLURINACIONAL
@@ -95,6 +96,18 @@ type Block = {
 };
 
 type Section = { heading: string; icon: typeof UsersRound; blocks: Block[] };
+type PreviewType = "37" | "38" | null;
+type ArchiveCard = {
+  number: string;
+  place: string;
+  title: string;
+  description: string;
+  href: string;
+  action: string;
+  external: boolean;
+  artwork?: string;
+  preview?: Exclude<PreviewType, null>;
+};
 
 const sections: Section[] = [
   {
@@ -176,15 +189,16 @@ const sections: Section[] = [
   },
 ];
 
-const archiveCards = [
+const archiveCards: ArchiveCard[] = [
   {
     number: "37°",
     place: "Jujuy · 2024",
     title: "Conclusiones de los talleres",
     description: "Documento colectivo con las conclusiones publicadas por la Comisión Organizadora de Jujuy.",
     href: "/manus-storage/conclusiones_37_encuentro_jujuy_2024_895a490f.pdf",
-    action: "Abrir conclusiones",
+    action: "Vista previa",
     external: true,
+    preview: "37",
   },
   {
     number: "38°",
@@ -247,6 +261,17 @@ function SectionContent({ section }: { section: Section }) {
 }
 
 export default function Home() {
+  const [preview, setPreview] = useState<PreviewType>(null);
+
+  useEffect(() => {
+    if (!preview) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setPreview(null);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [preview]);
+
   return (
     <div className="site-shell">
       <header className="hero">
@@ -265,9 +290,14 @@ export default function Home() {
       <main id="documento" className="main-content">
         <div className="document-meta">
           <div><span>Documento colectivo</span><strong>Taller 8 · Corrientes 2025</strong></div>
-          <button className="download-button" type="button" onClick={downloadSource}>
-            <Download size={17} /> Descargar texto entregado
-          </button>
+          <div className="document-actions">
+            <button className="preview-button" type="button" onClick={() => setPreview("38")} aria-haspopup="dialog">
+              <Eye size={17} /> Vista previa
+            </button>
+            <button className="download-button" type="button" onClick={downloadSource}>
+              <Download size={17} /> Descargar texto entregado
+            </button>
+          </div>
         </div>
 
         <aside className="editorial-note">
@@ -302,9 +332,15 @@ export default function Home() {
                   </div>
                   <h3>{card.title}</h3>
                   <p>{card.description}</p>
-                  <a className="archive-action" href={card.href} target={card.external ? "_blank" : undefined} rel={card.external ? "noreferrer" : undefined}>
-                    {card.action} {card.external ? <ArrowUpRight size={17} aria-hidden="true" /> : <BookOpen size={17} aria-hidden="true" />}
-                  </a>
+                  {card.preview ? (
+                    <button className="archive-action" type="button" onClick={() => { if (card.preview) setPreview(card.preview); }} aria-haspopup="dialog">
+                      {card.action} <Eye size={17} aria-hidden="true" />
+                    </button>
+                  ) : (
+                    <a className="archive-action" href={card.href} target={card.external ? "_blank" : undefined} rel={card.external ? "noreferrer" : undefined}>
+                      {card.action} {card.external ? <ArrowUpRight size={17} aria-hidden="true" /> : <BookOpen size={17} aria-hidden="true" />}
+                    </a>
+                  )}
                 </div>
               </article>
             ))}
@@ -350,6 +386,35 @@ export default function Home() {
         <p>38° Encuentro Plurinacional · Corrientes 2025</p>
         <p>Conclusiones finales del Taller 8 · Activismo TTTNB · Eje 2</p>
       </footer>
+
+      {preview && (
+        <div className="modal-backdrop" role="presentation" onMouseDown={() => setPreview(null)}>
+          <section className="conclusions-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" onMouseDown={(event) => event.stopPropagation()}>
+            <header className="modal-header">
+              <div>
+                <p className="statement-label">Vista previa</p>
+                <h2 id="modal-title">{preview === "37" ? "Conclusiones del 37° Encuentro · Jujuy 2024" : "Texto entregado · Taller 8 · Corrientes 2025"}</h2>
+              </div>
+              <button className="modal-close" type="button" onClick={() => setPreview(null)} aria-label="Cerrar vista previa"><X size={23} /></button>
+            </header>
+            <div className="modal-body">
+              {preview === "37" ? (
+                <iframe title="Conclusiones del 37° Encuentro Plurinacional" src="/manus-storage/conclusiones_37_encuentro_jujuy_2024_895a490f.pdf#view=FitH" />
+              ) : (
+                <pre>{sourceText}</pre>
+              )}
+            </div>
+            <footer className="modal-footer">
+              {preview === "37" ? (
+                <a className="modal-download" href="/manus-storage/conclusiones_37_encuentro_jujuy_2024_895a490f.pdf" target="_blank" rel="noreferrer"><Download size={17} /> Descargar PDF</a>
+              ) : (
+                <button className="modal-download" type="button" onClick={downloadSource}><Download size={17} /> Descargar texto entregado</button>
+              )}
+              <button className="modal-dismiss" type="button" onClick={() => setPreview(null)}>Cerrar</button>
+            </footer>
+          </section>
+        </div>
+      )}
     </div>
   );
 }
