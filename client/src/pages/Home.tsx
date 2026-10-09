@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { ArrowUpRight, BookOpen, CalendarDays, Download, Eye, FileText, HeartHandshake, Landmark, Scale, UsersRound, X } from "lucide-react";
+import { useEffect, useState, type FormEvent } from "react";
+import { ArrowUpRight, BookOpen, CalendarDays, Download, Eye, FileText, HeartHandshake, Landmark, Mail, MapPin, Scale, Send, UsersRound, X } from "lucide-react";
+import { trpc } from "@/lib/trpc";
 
 const sourceText = `Conclusiones Finales
 38 ENCUENTRO PLURINACIONAL
@@ -379,6 +380,102 @@ function SectionContent({ section }: { section: Section }) {
   );
 }
 
+type ContactFormState = {
+  name: string;
+  email: string;
+  territory: string;
+  workshopInterest: "Cupo laboral travesti-trans" | "Activismos travesti, trans, transgénero" | "Otro taller / acompañar la red";
+  consent: boolean;
+  website: string;
+};
+
+const initialContactForm: ContactFormState = {
+  name: "",
+  email: "",
+  territory: "",
+  workshopInterest: "Cupo laboral travesti-trans",
+  consent: false,
+  website: "",
+};
+
+function ContactNetworkForm() {
+  const [form, setForm] = useState<ContactFormState>(initialContactForm);
+  const [completed, setCompleted] = useState(false);
+  const subscription = trpc.contact.subscribe.useMutation();
+
+  const update = <K extends keyof ContactFormState>(key: K, value: ContactFormState[K]) => {
+    setForm((current) => ({ ...current, [key]: value }));
+    if (completed) setCompleted(false);
+  };
+
+  const submit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!form.consent) return;
+    subscription.mutate({ ...form, consent: true }, {
+      onSuccess: () => {
+        setCompleted(true);
+        setForm(initialContactForm);
+      },
+    });
+  };
+
+  return (
+    <section className="contact-card" id="red-contacto" aria-labelledby="red-contacto-titulo">
+      <div className="contact-brand">
+        <img src="/manus-storage/Logo_af5fe2cf.png" alt="Logo del 39° Encuentro Plurinacional de Córdoba 2026" />
+        <p>Red de contacto</p>
+      </div>
+      <h2 id="red-contacto-titulo">Para seguir en contacto después del taller</h2>
+      <p className="contact-intro">Dejá un correo y recibí el material conversado, las conclusiones y próximas convocatorias de esta red.</p>
+
+      {completed ? (
+        <div className="contact-success" role="status">
+          <strong>Tu contacto quedó registrado.</strong>
+          <span>Te vamos a escribir al correo indicado con los materiales y novedades de los talleres.</span>
+        </div>
+      ) : (
+        <form className="contact-form" onSubmit={submit}>
+          <label>
+            <span>Correo electrónico <b aria-hidden="true">*</b></span>
+            <span className="field-with-icon"><Mail size={16} aria-hidden="true" /><input type="email" autoComplete="email" value={form.email} onChange={(event) => update("email", event.target.value)} required /></span>
+          </label>
+          <div className="contact-form-pair">
+            <label>
+              <span>Nombre o cómo querés que te llamemos</span>
+              <input type="text" autoComplete="name" value={form.name} onChange={(event) => update("name", event.target.value)} />
+            </label>
+            <label>
+              <span>Provincia / territorio</span>
+              <span className="field-with-icon"><MapPin size={16} aria-hidden="true" /><input type="text" value={form.territory} onChange={(event) => update("territory", event.target.value)} /></span>
+            </label>
+          </div>
+          <label>
+            <span>Taller o espacio de interés <b aria-hidden="true">*</b></span>
+            <select value={form.workshopInterest} onChange={(event) => update("workshopInterest", event.target.value as ContactFormState["workshopInterest"])}>
+              <option>Cupo laboral travesti-trans</option>
+              <option>Activismos travesti, trans, transgénero</option>
+              <option>Otro taller / acompañar la red</option>
+            </select>
+          </label>
+          <label className="contact-consent">
+            <input type="checkbox" checked={form.consent} onChange={(event) => update("consent", event.target.checked)} required />
+            <span>Acepto que estos datos se guarden para recibir materiales, conclusiones y convocatorias de esta red. Puedo pedir la baja en cualquier momento.</span>
+          </label>
+          <label className="honeypot" aria-hidden="true">
+            <span>No completar este campo</span>
+            <input tabIndex={-1} autoComplete="off" value={form.website} onChange={(event) => update("website", event.target.value)} />
+          </label>
+          {subscription.error && <p className="contact-error" role="alert">{subscription.error.message}</p>}
+          <button className="contact-submit" type="submit" disabled={subscription.isPending}>
+            <Send size={17} aria-hidden="true" /> {subscription.isPending ? "Guardando…" : "Sumarme a la red"}
+          </button>
+        </form>
+      )}
+      <p className="contact-privacy">Guardamos solo lo necesario para comunicarnos. Tus datos no se publican ni se comparten fuera de la red.</p>
+    </section>
+  );
+}
+
 export default function Home() {
   const [preview, setPreview] = useState<PreviewType>(null);
   const historicalPreview = preview === "35" || preview === "36" ? historicalSources[preview] : null;
@@ -400,12 +497,16 @@ export default function Home() {
         <div className="hero-grid" aria-hidden="true" />
         <div className="hero-orb hero-orb-left" aria-hidden="true" />
         <div className="hero-orb hero-orb-right" aria-hidden="true" />
-        <div className="hero-inner">
-          <p className="kicker">38° Encuentro Plurinacional · Corrientes 2025</p>
-          <div className="title-rule" />
-          <h1>Conclusiones<br /><em>finales</em> del Taller 8</h1>
-          <p className="subtitle">Activismo TTTNB · Eje 2</p>
-          <a className="scroll-link" href="#documento">Leer el documento <ArrowDownMark /></a>
+        <div className="hero-inner hero-layout">
+          <div className="hero-copy">
+            <p className="kicker">38° Encuentro Plurinacional · Corrientes 2025</p>
+            <div className="title-rule" />
+            <h1>Conclusiones<br /><em>finales</em> del Taller 8</h1>
+            <p className="subtitle">Activismo TTTNB · Eje 2</p>
+            <p className="hero-network-note">Una red para que lo conversado no termine cuando termina el taller.</p>
+            <a className="scroll-link" href="#documento">Leer el documento <ArrowDownMark /></a>
+          </div>
+          <ContactNetworkForm />
         </div>
       </header>
 
