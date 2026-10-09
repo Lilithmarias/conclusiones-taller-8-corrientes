@@ -87,6 +87,8 @@ h1 em { color: #ffd486; font-weight: 400; }
 .archive-card-artwork { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 58% 50%; opacity: .75; }
 .archive-source { display: flex; align-items: flex-start; gap: .45rem; margin: 1rem 0 0; color: #685668; font-family: "DM Mono", monospace; font-size: .68rem; line-height: 1.45; }
 .archive-source svg { flex: 0 0 auto; margin-top: .05rem; }
+.archive-verified { margin: 1.05rem 0 0; padding: .85rem 1rem; border-left: 4px solid #1c925c; background: rgba(255,255,255,.68); color: #3d3840; font-size: .83rem; line-height: 1.55; }
+.archive-verified strong { color: #21662f; }
 
 .doc-section { margin: 0 0 4.65rem; scroll-margin-top: 2rem; }
 .section-heading { display: flex; align-items: center; gap: .85rem; margin-bottom: 2rem; padding-bottom: .95rem; border-bottom: 1px solid var(--line); }

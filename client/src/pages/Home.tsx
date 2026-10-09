@@ -212,10 +212,10 @@ const archiveCards: ArchiveCard[] = [
   {
     number: "39°",
     place: "Córdoba · 2026",
-    title: "Camino al próximo Encuentro",
-    description: "Información, comunicación y materiales de la convocatoria del 39° Encuentro Plurinacional.",
-    href: "https://www.39encuentropluri.com/",
-    action: "Ir al sitio oficial",
+    title: "Taller 6 · Cupo laboral",
+    description: "La grilla oficial ubica aquí la Ley 27.636, reparación histórica, Ley Integral Trans, salud, ESI, justicia y educación.",
+    href: "https://www.39encuentropluri.com/Talleres",
+    action: "Ver talleres oficiales",
     external: true,
     artwork: "/manus-storage/1000915858_a216e7e6.png",
   },
@@ -346,6 +346,7 @@ export default function Home() {
             ))}
           </div>
           <p className="archive-source"><CalendarDays size={16} aria-hidden="true" /> El archivo se amplía con enlaces a publicaciones de las comisiones organizadoras y documentos colectivos disponibles.</p>
+          <p className="archive-verified"><strong>Actualización 39° Encuentro:</strong> el Taller 6, “Activismos travesti, trans, transgénero”, se realiza en la Escuela Juan Bautista Alberdi — Av. General Paz 488. Su temario oficial incluye la implementación de la Ley 27.636 Diana Sacayán–Lohana Berkins.</p>
         </section>
 
         {sections.map((section) => <SectionContent key={section.heading} section={section} />)}
