@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
-const sourceUrl = "https://raw.githubusercontent.com/Lilithmarias/conclusiones-taller-8-corrientes/main/vercel-direct/index.html";
+const sourceUrl = "https://raw.githubusercontent.com/Lilithmarias/conclusiones-taller-8-corrientes/c090206/vercel-direct/index.html";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "GET" && req.method !== "HEAD") {
@@ -14,7 +14,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const html = await upstream.text();
     res.setHeader("Content-Type", "text/html; charset=utf-8");
-    res.setHeader("Cache-Control", "public, s-maxage=3600, stale-while-revalidate=86400");
+    res.setHeader("Cache-Control", "no-store");
     return res.status(200).send(html);
   } catch (error) {
     console.error("[page] No se pudo cargar la página pública", error);
