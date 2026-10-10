@@ -36,10 +36,16 @@ export const appRouter = router({
         workshopInterest: input.workshopInterest,
       });
 
-      await notifyOwner({
-        title: "Nueva inscripción a la red de contacto",
-        content: `${contact.email} · ${contact.territory || "Sin territorio informado"} · ${contact.workshopInterest}`,
-      });
+      try {
+        await notifyOwner({
+          title: "Nueva inscripción a la red de contacto",
+          content: `${contact.email} · ${contact.territory || "Sin territorio informado"} · ${contact.workshopInterest}`,
+        });
+      } catch (error) {
+        // El consentimiento ya se guardó. La inscripción no debe perderse si
+        // el aviso interno de la plataforma no está configurado en producción.
+        console.warn("[Contact] No se pudo enviar el aviso de inscripción:", error);
+      }
 
       return { success: true, subscribedAt: contact.consentAt } as const;
     }),

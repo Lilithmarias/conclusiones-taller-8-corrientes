@@ -94,7 +94,7 @@ const historicalSources = {
   "35": {
     title: "Conclusiones entregadas · Taller 71 · San Luis 2022",
     filename: "conclusiones-taller-71-cupo-laboral-san-luis-2022.txt",
-    sourceHref: "/manus-storage/conclusiones_taller_71_san_luis_2022_fuente_f5ee5107.txt",
+    sourceHref: "/archivo/conclusiones-taller-71-san-luis-2022.txt",
     text: `CONCLUSIONES – CONSIDERACIONES
 ENCUENTROS DE MUJERES Lesbianas, Travestis, Trans, Bisexuales, Intersexuales y No Binaries.
 TALLER DE CUPO LABORAL
@@ -116,7 +116,7 @@ Que se cambie esa realidad y es con oportunidades laborales. Para la permanencia
   "36": {
     title: "Conclusiones entregadas · Taller 69 · Furilofche/Bariloche 2023",
     filename: "conclusiones-taller-69-cupo-laboral-furilofche-2023.txt",
-    sourceHref: "/manus-storage/conclusiones_taller_69_furilofche_2023_fuente_b7ccfb6b.txt",
+    sourceHref: "/archivo/conclusiones-taller-69-furilofche-2023.txt",
     text: `36° Encuentro · Noviembre de 2023 · Taller N° 69 · Bariloche
 CONCLUSIONES DEL TALLER DE CUPO LABORAL TRANS
 
@@ -146,7 +146,7 @@ Nota de publicación: se omitieron los correos electrónicos personales incluido
 const archiveAnalysis = {
   title: "Análisis comparativo · Cupo laboral · 35°–37° Encuentros",
   filename: "analisis-comparativo-cupo-laboral-35-36-37.txt",
-  sourceHref: "/manus-storage/ANALISIS_COMPARATIVO_CUPO_LABORAL_35_36_37_f8b5887f.md",
+  sourceHref: "/archivo/analisis-comparativo-35-36-37.md",
   text: `ANÁLISIS COMPARATIVO DOCUMENTAL
 Talleres de Cupo Laboral Travesti-Trans · 35°, 36° y 37° Encuentros
 
@@ -301,7 +301,7 @@ const archiveCards: ArchiveCard[] = [
     place: "Jujuy · 2024",
     title: "Conclusiones de los talleres",
     description: "Documento colectivo con las conclusiones publicadas por la Comisión Organizadora de Jujuy.",
-    href: "/manus-storage/conclusiones_37_encuentro_jujuy_2024_895a490f.pdf",
+    href: "/archivo/conclusiones-37-jujuy-2024.pdf",
     action: "Vista previa",
     external: true,
     preview: "37",
@@ -323,7 +323,7 @@ const archiveCards: ArchiveCard[] = [
     href: "https://www.39encuentropluri.com/Talleres",
     action: "Ver talleres oficiales",
     external: true,
-    artwork: "/manus-storage/1000915858_a216e7e6.png",
+    artwork: "/archivo/identidad-39-encuentro.png",
   },
   {
     number: "↗",
@@ -422,7 +422,7 @@ function ContactNetworkForm() {
   return (
     <section className="contact-card" id="red-contacto" aria-labelledby="red-contacto-titulo">
       <div className="contact-brand">
-        <img src="/manus-storage/Logo_af5fe2cf.png" alt="Logo del 39° Encuentro Plurinacional de Córdoba 2026" />
+        <img src="/archivo/logo-39-encuentro.png" alt="Logo del 39° Encuentro Plurinacional de Córdoba 2026" />
         <p>Red de contacto</p>
       </div>
       <h2 id="red-contacto-titulo">Para seguir en contacto después del taller</h2>
@@ -512,7 +512,7 @@ export default function Home() {
 
       <main id="documento" className="main-content">
         <section className="march-callout" aria-labelledby="marcha-title">
-          <img className="march-poster" src="/manus-storage/1000916566_d6f86b72.jpg" alt="Afiche de la Marcha contra los Travesticidios, Transfemicidios y Transhomicidios del 39° Encuentro Plurinacional" />
+          <img className="march-poster" src="/archivo/marcha-travesticidios-39-encuentro.jpg" alt="Afiche de la Marcha contra los Travesticidios, Transfemicidios y Transhomicidios del 39° Encuentro Plurinacional" />
           <div className="march-content">
             <p className="statement-label">39° Encuentro Plurinacional · Convocatoria</p>
             <h2 id="marcha-title">🏳️‍⚧️💜 Marcha contra los travesticidios, transfemicidios y transhomicidios</h2>
@@ -561,7 +561,7 @@ export default function Home() {
               <h2 id="archivo-encuentros">Archivo de Encuentros</h2>
               <p>Las conclusiones son memoria organizada. Este archivo reúne las fuentes disponibles desde San Luis 2022 hasta Corrientes 2025 y el camino hacia el próximo Encuentro.</p>
             </div>
-            <img className="archive-logo" src="/manus-storage/Logo_af5fe2cf.png" alt="Identidad gráfica del 39° Encuentro Plurinacional de Córdoba 2026" />
+            <img className="archive-logo" src="/archivo/logo-39-encuentro.png" alt="Identidad gráfica del 39° Encuentro Plurinacional de Córdoba 2026" />
           </div>
           <div className="archive-cards archive-cards-expanded">
             {archiveCards.map((card) => (
@@ -651,7 +651,7 @@ export default function Home() {
               {textPreview ? (
                 <pre>{textPreview.text}</pre>
               ) : preview === "37" ? (
-                <iframe title="Conclusiones del 37° Encuentro Plurinacional" src="/manus-storage/conclusiones_37_encuentro_jujuy_2024_895a490f.pdf#view=FitH" />
+                <iframe title="Conclusiones del 37° Encuentro Plurinacional" src="/archivo/conclusiones-37-jujuy-2024.pdf#view=FitH" />
               ) : (
                 <pre>{sourceText}</pre>
               )}
@@ -660,7 +660,7 @@ export default function Home() {
               {textPreview ? (
                 <a className="modal-download" href={textPreview.sourceHref} download><Download size={17} /> {analysisPreview ? "Descargar análisis" : "Descargar texto fuente"}</a>
               ) : preview === "37" ? (
-                <a className="modal-download" href="/manus-storage/conclusiones_37_encuentro_jujuy_2024_895a490f.pdf" target="_blank" rel="noreferrer"><Download size={17} /> Descargar PDF</a>
+                <a className="modal-download" href="/archivo/conclusiones-37-jujuy-2024.pdf" target="_blank" rel="noreferrer"><Download size={17} /> Descargar PDF</a>
               ) : (
                 <button className="modal-download" type="button" onClick={downloadSource}><Download size={17} /> Descargar texto entregado</button>
               )}

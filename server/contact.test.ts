@@ -55,6 +55,14 @@ describe("contact.subscribe", () => {
     }));
   });
 
+  it("conserva la inscripción si falla el aviso interno", async () => {
+    mocks.notifyOwner.mockRejectedValue(new Error("Servicio de aviso no disponible"));
+    const caller = appRouter.createCaller(ctx);
+
+    await expect(caller.contact.subscribe(validSubscription)).resolves.toMatchObject({ success: true });
+    expect(mocks.upsertContactSubscription).toHaveBeenCalledTimes(1);
+  });
+
   it("rechaza una inscripción sin consentimiento sin guardar datos", async () => {
     const caller = appRouter.createCaller(ctx);
 
