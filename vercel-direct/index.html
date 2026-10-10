@@ -17,6 +17,7 @@
     .hero-inner,.layout { position:relative; z-index:1; width:min(1080px,100%); margin:auto; }
     .hero-inner { display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(2rem,5vw,5rem); align-items:center; }
     .eyebrow,.label { margin:0; font-size:.72rem; font-weight:800; letter-spacing:.13em; text-transform:uppercase; }
+    .hero-logo { display:block; width:132px; max-height:96px; margin:.65rem 0 .1rem; object-fit:contain; object-position:left center; }
     .title-rule { width:44px; height:4px; margin:1.1rem 0 1.45rem; background:#f6bc60; }
     h1 { max-width:10ch; margin:0; font-family:Georgia,"Times New Roman",serif; font-size:clamp(3.1rem,7vw,6.2rem); line-height:.92; letter-spacing:-.075em; }
     h1 em { color:#f6cb85; font-weight:normal; }
@@ -28,7 +29,7 @@
     .workshop-list li { padding:.45rem .6rem; border-left:2px solid #f6bc60; background:rgba(255,255,255,.1); font-size:.76rem; font-weight:650; line-height:1.35; }
     .contact { padding:1.35rem; border-radius:5px; color:var(--tinta); background:#fff; box-shadow:0 20px 50px rgba(0,0,0,.22); }
     .contact-brand { display:flex; align-items:center; justify-content:space-between; gap:1rem; }
-    .contact-brand img { width:50px; height:50px; object-fit:contain; }
+    .contact-brand img { width:76px; height:60px; object-fit:contain; object-position:left center; }
     .contact-brand .label { color:var(--violeta); font-size:.62rem; }
     .contact h2 { margin:.75rem 0 .4rem; font-family:Georgia,serif; font-size:1.7rem; line-height:1.02; }
     .contact .intro { margin:0 0 1rem; color:#675561; font-size:.87rem; }
@@ -69,6 +70,7 @@
     .card p { min-height:3.2em; margin:.45rem 0 .8rem; font-size:.84rem; }
     .card a { color:var(--violeta); font-size:.8rem; font-weight:800; }
     footer { padding:2.5rem 1rem; color:#f9ecf0; background:#32162b; text-align:center; font-size:.82rem; }
+    .footer-logo { display:block; width:112px; max-height:88px; margin:0 auto .8rem; object-fit:contain; }
     @media (max-width:720px) { .hero-inner,.march { grid-template-columns:1fr; } .hero { padding-top:3.2rem; } h1 { font-size:3.5rem; } .workshop-list,.pair,.march-details,.archive { grid-template-columns:1fr; } .march img { min-height:0; max-height:450px; object-position:top; } .doc-head { grid-template-columns:1fr; } .source { justify-self:start; } .button + .button { margin-left:0; } }
   </style>
 </head>
@@ -78,6 +80,7 @@
     <div class="hero-inner">
       <div>
         <p class="eyebrow">Preparación colectiva · 39° Encuentro Plurinacional</p>
+        <img class="hero-logo" src="https://raw.githubusercontent.com/Lilithmarias/conclusiones-taller-8-corrientes/main/vercel-direct/logo-principal-39-encuentro.webp" alt="Logo del 39° Encuentro Plurinacional" />
         <div class="title-rule"></div>
         <h1>Preparación<br>para el <em>39° Encuentro</em><br>Córdoba 2026</h1>
         <p class="sub">6 — Activismos travesti, trans, transgénero</p>
@@ -95,7 +98,7 @@
         <a class="button" href="https://sindicalismo-trans-formador.vercel.app/" target="_blank" rel="noreferrer">Sindicalismo Trans-Formador ↗</a>
       </div>
       <section class="contact" aria-labelledby="red-title">
-        <div class="contact-brand"><img src="https://raw.githubusercontent.com/Lilithmarias/conclusiones-taller-8-corrientes/main/vercel-direct/logo-39-encuentro.png" alt="Logo del 39° Encuentro"><p class="label">Red de contacto</p></div>
+        <div class="contact-brand"><img src="https://raw.githubusercontent.com/Lilithmarias/conclusiones-taller-8-corrientes/main/vercel-direct/logo-principal-39-encuentro.webp" alt="Logo del 39° Encuentro"><p class="label">Red de contacto</p></div>
         <h2 id="red-title">Para seguir en contacto después del taller</h2>
         <p class="intro">Dejá un correo y recibí el material conversado, las conclusiones y próximas convocatorias de esta red.</p>
         <form id="contact-form">
@@ -134,7 +137,7 @@
     </article>
     <section class="section"><p class="label" style="color:#8c1e53">Memoria en movimiento</p><h2>Archivo de Encuentros</h2><p>Las conclusiones son memoria organizada. Este archivo reúne fuentes disponibles desde San Luis 2022 hasta Corrientes 2025 y el camino hacia Córdoba 2026.</p><div class="archive"><div class="card"><b>35° · San Luis · 2022</b><p>Taller 71 · Cupo laboral. Federalización, reglamentación, redes territoriales y reparación histórica.</p><a href="https://raw.githubusercontent.com/Lilithmarias/conclusiones-taller-8-corrientes/main/client/public/archivo/conclusiones-taller-71-san-luis-2022.txt" target="_blank">Leer fuente ↗</a></div><div class="card"><b>36° · Furilofche / Bariloche · 2023</b><p>Taller 69 · Cupo laboral. Permanencia, protocolos, capacitación y derechos laborales.</p><a href="https://raw.githubusercontent.com/Lilithmarias/conclusiones-taller-8-corrientes/main/client/public/archivo/conclusiones-taller-69-furilofche-2023.txt" target="_blank">Leer fuente ↗</a></div><div class="card"><b>37° · Jujuy · 2024</b><p>Documento colectivo de conclusiones publicado por su Comisión Organizadora.</p><a href="https://raw.githubusercontent.com/Lilithmarias/conclusiones-taller-8-corrientes/main/client/public/archivo/conclusiones-37-jujuy-2024.pdf" target="_blank">Abrir PDF ↗</a></div><div class="card"><b>39° · Córdoba · 2026</b><p>Taller 6 · Activismos travesti, trans, transgénero. Ley 27.636, reparación histórica, salud, ESI, justicia y educación.</p><a href="https://www.39encuentropluri.com/Talleres" target="_blank">Ver talleres oficiales ↗</a></div></div></section>
   </main>
-  <footer>Conclusiones finales del 38° Encuentro para el 39° Encuentro · Córdoba 2026<br>Este sitio cuida la memoria colectiva y comunitaria; se mantiene con código abierto para ser escrito y corregido por quienes ponen el cuerpo.<br><a href="https://sindicalismo-trans-formador.vercel.app/" target="_blank" rel="noreferrer">Sindicalismo Trans-Formador ↗</a></footer>
+  <footer><img class="footer-logo" src="https://raw.githubusercontent.com/Lilithmarias/conclusiones-taller-8-corrientes/main/vercel-direct/logo-principal-39-encuentro.webp" alt="Logo del 39° Encuentro Plurinacional">Conclusiones finales del 38° Encuentro para el 39° Encuentro · Córdoba 2026<br>Este sitio cuida la memoria colectiva y comunitaria; se mantiene con código abierto para ser escrito y corregido por quienes ponen el cuerpo.<br><a href="https://sindicalismo-trans-formador.vercel.app/" target="_blank" rel="noreferrer">Sindicalismo Trans-Formador ↗</a></footer>
   <script>
     const form=document.getElementById('contact-form'), message=document.getElementById('form-message'), submit=form.querySelector('button');
     form.addEventListener('submit', async (event)=>{event.preventDefault(); submit.disabled=true; submit.textContent='Guardando…'; message.textContent=''; message.className=''; try { const response=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email.value,name:name.value,territory:territory.value,workshopInterest:workshopInterest.value,consent:consent.checked,website:website.value})}); const data=await response.json(); if(!response.ok) throw new Error(data.error||'No se pudo guardar la inscripción.'); form.reset(); message.className='form-message ok'; message.textContent='Tu contacto quedó registrado. Te vamos a escribir con materiales y novedades de la red.'; } catch(error) { message.className='form-message error'; message.textContent=error.message||'No se pudo guardar la inscripción. Probá nuevamente.'; } finally {submit.disabled=false;submit.textContent='Sumarme a la red';} });
