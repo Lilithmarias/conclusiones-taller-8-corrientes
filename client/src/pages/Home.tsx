@@ -1,6 +1,5 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { ArrowUpRight, BookOpen, CalendarDays, Download, Eye, FileText, HeartHandshake, Landmark, Mail, MapPin, Scale, Send, UsersRound, X } from "lucide-react";
-import { trpc } from "@/lib/trpc";
 
 const sourceText = `Conclusiones Finales
 38 ENCUENTRO PLURINACIONAL
@@ -94,7 +93,7 @@ const historicalSources = {
   "35": {
     title: "Conclusiones entregadas · Taller 71 · San Luis 2022",
     filename: "conclusiones-taller-71-cupo-laboral-san-luis-2022.txt",
-    sourceHref: "/archivo/conclusiones-taller-71-san-luis-2022.txt",
+    sourceHref: "https://raw.githubusercontent.com/Lilithmarias/conclusiones-taller-8-corrientes/main/client/public/archivo/conclusiones-taller-71-san-luis-2022.txt",
     text: `CONCLUSIONES – CONSIDERACIONES
 ENCUENTROS DE MUJERES Lesbianas, Travestis, Trans, Bisexuales, Intersexuales y No Binaries.
 TALLER DE CUPO LABORAL
@@ -116,7 +115,7 @@ Que se cambie esa realidad y es con oportunidades laborales. Para la permanencia
   "36": {
     title: "Conclusiones entregadas · Taller 69 · Furilofche/Bariloche 2023",
     filename: "conclusiones-taller-69-cupo-laboral-furilofche-2023.txt",
-    sourceHref: "/archivo/conclusiones-taller-69-furilofche-2023.txt",
+    sourceHref: "https://raw.githubusercontent.com/Lilithmarias/conclusiones-taller-8-corrientes/main/client/public/archivo/conclusiones-taller-69-furilofche-2023.txt",
     text: `36° Encuentro · Noviembre de 2023 · Taller N° 69 · Bariloche
 CONCLUSIONES DEL TALLER DE CUPO LABORAL TRANS
 
@@ -146,7 +145,7 @@ Nota de publicación: se omitieron los correos electrónicos personales incluido
 const archiveAnalysis = {
   title: "Análisis comparativo · Cupo laboral · 35°–37° Encuentros",
   filename: "analisis-comparativo-cupo-laboral-35-36-37.txt",
-  sourceHref: "/archivo/analisis-comparativo-35-36-37.md",
+  sourceHref: "https://raw.githubusercontent.com/Lilithmarias/conclusiones-taller-8-corrientes/main/client/public/archivo/analisis-comparativo-35-36-37.md",
   text: `ANÁLISIS COMPARATIVO DOCUMENTAL
 Talleres de Cupo Laboral Travesti-Trans · 35°, 36° y 37° Encuentros
 
@@ -301,7 +300,7 @@ const archiveCards: ArchiveCard[] = [
     place: "Jujuy · 2024",
     title: "Conclusiones de los talleres",
     description: "Documento colectivo con las conclusiones publicadas por la Comisión Organizadora de Jujuy.",
-    href: "/archivo/conclusiones-37-jujuy-2024.pdf",
+    href: "https://raw.githubusercontent.com/Lilithmarias/conclusiones-taller-8-corrientes/main/client/public/archivo/conclusiones-37-jujuy-2024.pdf",
     action: "Vista previa",
     external: true,
     preview: "37",
@@ -323,7 +322,7 @@ const archiveCards: ArchiveCard[] = [
     href: "https://www.39encuentropluri.com/Talleres",
     action: "Ver talleres oficiales",
     external: true,
-    artwork: "/archivo/identidad-39-encuentro.png",
+    artwork: "https://raw.githubusercontent.com/Lilithmarias/conclusiones-taller-8-corrientes/main/client/public/archivo/identidad-39-encuentro.png",
   },
   {
     number: "↗",
@@ -401,28 +400,43 @@ const initialContactForm: ContactFormState = {
 function ContactNetworkForm() {
   const [form, setForm] = useState<ContactFormState>(initialContactForm);
   const [completed, setCompleted] = useState(false);
-  const subscription = trpc.contact.subscribe.useMutation();
+  const [submitting, setSubmitting] = useState(false);
+  const [submissionError, setSubmissionError] = useState<string | null>(null);
 
   const update = <K extends keyof ContactFormState>(key: K, value: ContactFormState[K]) => {
     setForm((current) => ({ ...current, [key]: value }));
     if (completed) setCompleted(false);
+    if (submissionError) setSubmissionError(null);
   };
 
-  const submit = (event: FormEvent<HTMLFormElement>) => {
+  const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!form.consent) return;
-    subscription.mutate({ ...form, consent: true }, {
-      onSuccess: () => {
-        setCompleted(true);
-        setForm(initialContactForm);
-      },
-    });
+
+    setSubmitting(true);
+    setSubmissionError(null);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, consent: true }),
+      });
+      const payload = await response.json().catch(() => ({})) as { error?: string };
+      if (!response.ok) throw new Error(payload.error || "No se pudo guardar la inscripción. Probá nuevamente.");
+
+      setCompleted(true);
+      setForm(initialContactForm);
+    } catch (error) {
+      setSubmissionError(error instanceof Error ? error.message : "No se pudo guardar la inscripción. Probá nuevamente.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
     <section className="contact-card" id="red-contacto" aria-labelledby="red-contacto-titulo">
       <div className="contact-brand">
-        <img src="/archivo/logo-39-encuentro.png" alt="Logo del 39° Encuentro Plurinacional de Córdoba 2026" />
+        <img src="https://raw.githubusercontent.com/Lilithmarias/conclusiones-taller-8-corrientes/main/client/public/archivo/logo-39-encuentro.png" alt="Logo del 39° Encuentro Plurinacional de Córdoba 2026" />
         <p>Red de contacto</p>
       </div>
       <h2 id="red-contacto-titulo">Para seguir en contacto después del taller</h2>
@@ -465,9 +479,9 @@ function ContactNetworkForm() {
             <span>No completar este campo</span>
             <input tabIndex={-1} autoComplete="off" value={form.website} onChange={(event) => update("website", event.target.value)} />
           </label>
-          {subscription.error && <p className="contact-error" role="alert">{subscription.error.message}</p>}
-          <button className="contact-submit" type="submit" disabled={subscription.isPending}>
-            <Send size={17} aria-hidden="true" /> {subscription.isPending ? "Guardando…" : "Sumarme a la red"}
+          {submissionError && <p className="contact-error" role="alert">{submissionError}</p>}
+          <button className="contact-submit" type="submit" disabled={submitting}>
+            <Send size={17} aria-hidden="true" /> {submitting ? "Guardando…" : "Sumarme a la red"}
           </button>
         </form>
       )}
@@ -512,7 +526,7 @@ export default function Home() {
 
       <main id="documento" className="main-content">
         <section className="march-callout" aria-labelledby="marcha-title">
-          <img className="march-poster" src="/archivo/marcha-travesticidios-39-encuentro.jpg" alt="Afiche de la Marcha contra los Travesticidios, Transfemicidios y Transhomicidios del 39° Encuentro Plurinacional" />
+          <img className="march-poster" src="https://raw.githubusercontent.com/Lilithmarias/conclusiones-taller-8-corrientes/main/client/public/archivo/marcha-travesticidios-39-encuentro.jpg" alt="Afiche de la Marcha contra los Travesticidios, Transfemicidios y Transhomicidios del 39° Encuentro Plurinacional" />
           <div className="march-content">
             <p className="statement-label">39° Encuentro Plurinacional · Convocatoria</p>
             <h2 id="marcha-title">🏳️‍⚧️💜 Marcha contra los travesticidios, transfemicidios y transhomicidios</h2>
@@ -561,7 +575,7 @@ export default function Home() {
               <h2 id="archivo-encuentros">Archivo de Encuentros</h2>
               <p>Las conclusiones son memoria organizada. Este archivo reúne las fuentes disponibles desde San Luis 2022 hasta Corrientes 2025 y el camino hacia el próximo Encuentro.</p>
             </div>
-            <img className="archive-logo" src="/archivo/logo-39-encuentro.png" alt="Identidad gráfica del 39° Encuentro Plurinacional de Córdoba 2026" />
+            <img className="archive-logo" src="https://raw.githubusercontent.com/Lilithmarias/conclusiones-taller-8-corrientes/main/client/public/archivo/logo-39-encuentro.png" alt="Identidad gráfica del 39° Encuentro Plurinacional de Córdoba 2026" />
           </div>
           <div className="archive-cards archive-cards-expanded">
             {archiveCards.map((card) => (
@@ -651,7 +665,7 @@ export default function Home() {
               {textPreview ? (
                 <pre>{textPreview.text}</pre>
               ) : preview === "37" ? (
-                <iframe title="Conclusiones del 37° Encuentro Plurinacional" src="/archivo/conclusiones-37-jujuy-2024.pdf#view=FitH" />
+                <iframe title="Conclusiones del 37° Encuentro Plurinacional" src="https://raw.githubusercontent.com/Lilithmarias/conclusiones-taller-8-corrientes/main/client/public/archivo/conclusiones-37-jujuy-2024.pdf#view=FitH" />
               ) : (
                 <pre>{sourceText}</pre>
               )}
@@ -660,7 +674,7 @@ export default function Home() {
               {textPreview ? (
                 <a className="modal-download" href={textPreview.sourceHref} download><Download size={17} /> {analysisPreview ? "Descargar análisis" : "Descargar texto fuente"}</a>
               ) : preview === "37" ? (
-                <a className="modal-download" href="/archivo/conclusiones-37-jujuy-2024.pdf" target="_blank" rel="noreferrer"><Download size={17} /> Descargar PDF</a>
+                <a className="modal-download" href="https://raw.githubusercontent.com/Lilithmarias/conclusiones-taller-8-corrientes/main/client/public/archivo/conclusiones-37-jujuy-2024.pdf" target="_blank" rel="noreferrer"><Download size={17} /> Descargar PDF</a>
               ) : (
                 <button className="modal-download" type="button" onClick={downloadSource}><Download size={17} /> Descargar texto entregado</button>
               )}
